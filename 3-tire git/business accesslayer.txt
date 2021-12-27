@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+
+namespace Try3trie
+{
+    public class bussinessaccesslayer
+    {
+        dataaccesslayer dal = new dataaccesslayer();
+        public DataSet frombussiness()
+        {
+            //step 2.create the instance for data access layer recevie the 
+            dataaccesslayer dac = new dataaccesslayer();
+            DataSet dts = dac.connections();
+            if (dts != null)
+                return dts;
+            return dts;
+        }
+        #region INSERT
+
+
+        public Globalvariables insert(Globalvariables globalvariables)
+        {
+            try
+            {
+                if (globalvariables.Empno != null && globalvariables.Ename != null && globalvariables.Salary != null)
+                    globalvariables = dal.Forinsert(globalvariables);
+
+            }
+            catch (Exception ex)
+            {
+                globalvariables.Status = ex.Message;
+            }
+            return globalvariables;
+        }
+        #endregion
+
+        #region DELETE
+        public Globalvariables delete(Globalvariables globalvariables)
+        {
+            try
+            {
+                if (globalvariables.Empno != null)
+                    globalvariables = dal.Fordelete(globalvariables);
+            }
+            catch (Exception ex)
+            {
+                globalvariables.Status = ex.Message;
+            }
+            return globalvariables;
+        }
+        #endregion
+
+        #region UPDATE
+        public Globalvariables update(Globalvariables globalvariables)
+        {
+            try
+            {
+                if (globalvariables.Empno != null && globalvariables.Ename != null && globalvariables.Salary != null)
+                    globalvariables = dal.Forupdate(globalvariables);
+            }
+            catch (Exception ex)
+            {
+                globalvariables.Status = ex.Message;
+            }
+            return globalvariables;
+
+        }
+        #endregion
+
+    }
+}

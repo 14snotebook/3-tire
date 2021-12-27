@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace Try3trie
+{
+    public class dataaccesslayer
+    {
+        string flag = null;
+        public DataSet connections()
+        {
+            //ACADEMIC LEVEL (STATIC OR  TIGHTLY COUPLED CODE)  it work up to the given task only and not useful for code reusability
+            // step 1. create the connection and exeguite the query and return the result in the form of Dataset
+            SqlConnection cn = new SqlConnection("uid=sa;pwd=123;database=demoasp;server=.");
+            cn.Open();
+            SqlCommand sc = new SqlCommand("display", cn);
+            sc.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter dad = new SqlDataAdapter(sc);
+            cn.Close();
+            DataSet ds = new DataSet();
+            dad.Fill(ds);
+            return ds;
+        }
+        #region RESOURCE
+        public Globalvariables operations(string query, Globalvariables globalvariables)
+        {
+            // INDUSTRIAL LEVEL (GENERIC TYPE) we can use this code for N-no.of operations(code reusability possible here.)
+            DataSet ds = new DataSet();
+            try
+            {
+                SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["SqlConnectionString"].ConnectionString);
+                SqlDataAdapter dad;
+                SqlCommand sc = new SqlCommand(query, cn);
+                sc.CommandType = CommandType.StoredProcedure;
+                sc.Parameters.AddWithValue("@sno", SqlDbType.Int).Value = globalvariables.Empno;
+                if (flag != "d")
+                {
+                    sc.Parameters.AddWithValue("@name", SqlDbType.VarChar).Value = globalvariables.Ename;
+                    sc.Parameters.AddWithValue("@sal", SqlDbType.Money).Value = globalvariables.Salary;
+                }
+                cn.Open();
+                dad = new SqlDataAdapter(sc);
+                cn.Close();
+                dad.Fill(ds);
+                globalvariables.datatable = ds;
+
+            }
+            catch (SqlException ex)
+            {
+                globalvariables.Status = ex.Message;
+            }
+
+            return globalvariables;
+        }
+        #endregion
+
+        #region INSERT
+        public Globalvariables Forinsert(Globalvariables globalvariables)
+        {
+            globalvariables = operations("adding", globalvariables);  //return type of this method is dataset
+            return globalvariables;
+        }
+        #endregion
+
+        #region DLELETE
+        public Globalvariables Fordelete(Globalvariables globalvariables)
+        {
+            flag = "d";
+            globalvariables = operations("deletion", globalvariables);
+            return globalvariables;
+        }
+        #endregion
+
+        #region UPDATE
+        public Globalvariables Forupdate(Globalvariables globalvariables)
+        {
+            globalvariables = operations("updation", globalvariables);
+            return globalvariables;
+        }
+        #endregion
+    }
+}
+
+//SqlConnection cn = null;
+//String SqlconString = ConfigurationManager.ConnectionStrings["SqlConnectionString"].ConnectionString;
+//cn = new SqlConnection("SqlconString");

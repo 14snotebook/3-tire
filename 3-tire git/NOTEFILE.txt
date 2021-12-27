@@ -1,0 +1,154 @@
+
+HI THIS PRADEEP..
+this project is completly for beginners only 
+if u have more intrest 
+1.add the validations on text boxes and make it as responsive.
+2.shows the pop-up's 
+3.alert the user before delete the record
+finally 
+
+u may also update and share this file to your near and dears.😜😜😜
+happy learing...!!!
+
+
+
+DATA BASE
+________________________________________________________________
+
+INT VARCHAR         MONEY
+
+1	martin  	    2000
+2	donald  	    1400
+3	radha   	    1700
+4	kirshna 	    7600
+5	pushpa  	    6502
+6	radhysham	    6502
+7	shyam singharoy	124
+8	Rosy	        1234
+9	spiderman   	324232
+10	RRR	            124
+
+SP'S WHAT I USED HERE
+
+1.sp_helptext display 
+
+create procedure display   
+as   
+begin  
+select * from emp  
+end
+
+2. sp_helptext adding
+
+CREATE procedure adding @sno int,@name varchar(15),@sal money      
+as      
+begin      
+insert into emp values(@sno,@name,@sal)    
+--print 'success'  
+select * from emp    
+end
+
+3.sp_helptext deletion 
+
+CREATE procedure deletion @sno int  
+--delete sp  
+--deletion 23  
+as  
+begin  
+--declare @status int  for verification purpose.  
+delete from emp where empno=@sno;  
+select * from emp  
+end
+
+4.sp_helptext updation
+
+CREATE procedure updation @sno int ,@name varchar(15) ,@sal money  
+--updation   
+--updation 6,'vasudev',23445  
+as  
+begin  
+update emp set ename=@name ,salarey=@sal where empno=@sno  
+select * from emp  
+end
+________________________________________________________________
+
+TRASH CODE..
+
+using System;
+
+
+namespace Try3trie
+{
+    public class globalelements
+    {
+        public int Sno{get;set;}
+        public string Name { get; set; }
+        public double Salary { get; set; }
+
+    }
+}
+from data Accesslayer
+
+//SqlConnection cn = null;
+            //String SqlconString = ConfigurationManager.ConnectionStrings["SqlConnectionString"].ConnectionString;
+            //cn = new SqlConnection("SqlconString");
+            //SqlConnection cn = new SqlConnection("uid=sa;pwd=123;database=demoasp;server=.");
+            //SqlDataAdapter dad;
+            //SqlCommand sc;
+            //cn.Open();
+            //if (globalvariables.Empno!=null&& globalvariables.Ename!=null&& globalvariables.Salary!=null)
+            //{ 
+            //sc = new SqlCommand("adding", cn);
+            //sc.CommandType = CommandType.StoredProcedure;
+
+            //sc.Parameters.AddWithValue("@sno", SqlDbType.Int).Value = globalvariables.Empno;
+
+            //sc.Parameters.AddWithValue("@name", SqlDbType.VarChar).Value = globalvariables.Ename;
+
+            //sc.Parameters.AddWithValue("@sal", SqlDbType.Money).Value = globalvariables.Salary;
+            //sc.ExecuteNonQuery();
+            //dad = new SqlDataAdapter(sc);
+            //cn.Close();
+            //DataSet ds = new DataSet();
+            //dad.Fill(ds);
+            
+            //}
+            //return ds;
+            // sc.ExecuteNonQuery();
+            //dad = new SqlDataAdapter(sc);
+
+webfrom1.aspx.cs
+
+  //bussinessaccesslayer bl = new bussinessaccesslayer();
+            //DataSet ds1 = bl.frombussiness();
+            //myTable.DataSource = ds1;
+            //myTable.DataBind();
+
+            //pass the values to business layer
+            //SqlConnection cn = new SqlConnection("uid=sa;pwd=123;database=demoasp;server=.");
+            //SqlCommand sc = new SqlCommand("adding", cn);
+            //sc.CommandType = CommandType.StoredProcedure;
+            //sc.Parameters.Add("@sno",SqlDbType.Int).Value=sno.Text;
+            //sc.Parameters.Add("@Name", SqlDbType.VarChar).Value = Name.Text;
+            //sc.Parameters["@sal"].Value = Sal.Text;
+
+            //old or our learning style
+
+            SqlConnection cn = new SqlConnection("uid=sa;pwd=123;database=demoasp;server=.");
+            SqlDataAdapter dad = new SqlDataAdapter("select * from emp", cn);
+            DataSet ds = new DataSet();
+            dad.Fill(ds);
+            
+             myTable.DataSource = ds;
+             myTable.DataBind();
+          
+
+
+
+insert operation in dataaccesslayer
+
+
+            //DataSet ds = new DataSet();
+            //ds = operations("adding", globalvariables);
+
+close

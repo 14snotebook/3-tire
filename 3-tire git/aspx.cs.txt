@@ -1,0 +1,130 @@
+using System;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace Try3trie
+{
+    public partial class WebForm1 : System.Web.UI.Page
+    {
+        //create the instance for Globalvariables class as well as bussinessaccesslayer 
+        Globalvariables globalvariables = new Globalvariables();
+        bussinessaccesslayer blayer = new bussinessaccesslayer();
+        DataSet ds1;
+        #region pageload
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            bussinessaccesslayer bl = new bussinessaccesslayer();
+            DataSet ds1 = bl.frombussiness();
+            myTable.DataSource = ds1;
+            myTable.DataBind();
+        }
+        #endregion
+
+        #region INSERT 
+        protected void submit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //getting the value from business layer
+                globalvariables.Empno = int.Parse(sno.Text);
+                globalvariables.Ename = name.Text;
+                globalvariables.Salary = double.Parse(sal.Text);
+                //pass the empno ename salary as a parameters using globalvariables , and in return get the datatable for display the output
+                //blayer is bussinessaccesslayer insert is method
+                globalvariables = blayer.insert(globalvariables);
+                clear();
+                if (globalvariables.datatable != null)
+                {
+                    myTable.DataSource = globalvariables.datatable;
+                    myTable.DataBind();
+                }
+                else
+                {
+                    status.Text = globalvariables.Status;
+                }
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+        }
+        #endregion
+
+        #region UPDATE
+        protected void update_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                globalvariables.Empno = int.Parse(sno.Text);
+                globalvariables.Ename = name.Text;
+                globalvariables.Salary = double.Parse(sal.Text);
+                //pass the empno ename salary as a parameters using globalvariables , and in return get the datatable for display the output
+                //blayer is bussinessaccesslayer update is method 
+                globalvariables = blayer.update(globalvariables);
+                clear();
+                if (globalvariables.datatable != null)
+                {
+                    myTable.DataSource = globalvariables.datatable;
+                    myTable.DataBind();
+                }
+                else
+                {
+                    status.Text = globalvariables.Status;
+                }
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+
+        }
+        #endregion
+
+        #region DELETE
+        protected void delete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                globalvariables.Empno = int.Parse(sno.Text);
+                //pass the empno parameter using globalvariables , and in return get the datatable for display the output
+                //blayer is bussinessaccesslayer delete is method
+                globalvariables = blayer.delete(globalvariables);
+                clear();
+                if (globalvariables.datatable != null)
+                {
+                    myTable.DataSource = globalvariables.datatable;
+                    myTable.DataBind();
+                }
+                else
+                {
+                    status.Text = globalvariables.Status;
+                }
+            }
+            catch (Exception ex)
+            {
+                status.Text = ex.Message;
+            }
+
+        }
+        #endregion
+
+        #region CLEAR
+        public void clear()
+        {
+            //using this method we are clear the all textbox data at a time . it doesn't matter how many text boxes our page can have.
+            foreach (var item in Form.Controls)
+            {
+                if (item is TextBox)
+                {
+                    TextBox textBox = (TextBox)item;
+                    textBox.Text = "";
+                }
+            }
+        }
+        #endregion
+
+    }
+}

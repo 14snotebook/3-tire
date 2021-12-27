@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+
+namespace Try3trie
+{
+    #region variables
+    public class Globalvariables
+    {
+        public int? Empno { get; set; }  //get read  set write  
+        public string Ename { get; set; }
+        public double? Salary { get; set; }
+        public DataSet datatable { get; set; } //ds
+        public string ResultMessage { get; set; }
+        public string Status { get; set; }
+       
+    }
+
+    #endregion
+}
+
+
+//region is used to copy our code and clean sapartion from other's code mainly easy to copy our code and past into production server 
